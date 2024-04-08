@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+<h:head>
+  <title>PrimeFaces Hello World Example</title>
+    <h:outputStylesheet name="/css/style.css" />
+</h:head>
+
+<h:body>
+   <h:form id="helloworld-form">
+
+    <p:panel header="Панель управления">
+      <h:panelGrid columns="1" cellpadding="4">
+        <h:outputText  value="Номер счета"/>
+        <p:inputText id="account" disabled="true" styleClass="red" value="#{controlPanelView.account}" />
+      </h:panelGrid>
+        <h:panelGrid columns="1" cellpadding="4">
+            <h:panelGrid columns="1" style="margin-bottom:10px" cellpadding="5">
+                <p:outputLabel for="typeOption" value="Тип опциона" />
+                <p:selectOneRadio id="typeOption" value="#{radioView.typeOption}"  layout="grid" columns="1">
+                    <f:selectItem itemLabel="CALL" itemValue="CALL" />
+                    <f:selectItem itemLabel="PUT" itemValue="PUT" />
+                </p:selectOneRadio>
+            </h:panelGrid>
+
+        </h:panelGrid>
+
+    </p:panel>
+
+
+
+  </h:form>
+</h:body>
+</html>

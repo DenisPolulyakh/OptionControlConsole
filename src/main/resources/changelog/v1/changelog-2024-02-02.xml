@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:pro="http://www.liquibase.org/xml/ns/pro"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+    http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-latest.xsd ">
+    <preConditions onFail="HALT" onError="HALT">
+        <dbms type="postgresql"/>
+    </preConditions> 
+    <changeSet id="2024-02-02-02" author="polulyakh">
+        <sql stripComments="true">
+            CREATE TABLE option.property
+            (
+                id    serial NOT NULL,
+                key   text,
+                value text,
+                description text,
+                CONSTRAINT pk_property PRIMARY KEY (id)
+            );
+        </sql>
+    </changeSet>
+    <changeSet id="2024-02-02-03" author="polulyakh">
+        <sql stripComments="true">
+            INSERT INTO option.property(key,value,description)
+            values(
+                   'ACCOUNT','','Счет для торговли'
+                  )
+        </sql>
+    </changeSet>
+</databaseChangeLog>

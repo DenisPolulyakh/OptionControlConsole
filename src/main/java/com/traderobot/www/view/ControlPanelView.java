@@ -52,10 +52,22 @@ public class ControlPanelView {
      */
     private List<String> expireDates = new ArrayList<>();
 
+
     /**
      * Выбранная дата экспирации
      */
     private String expireDateSelected;
+
+    /**
+     * Серия опционов
+     */
+    private List<String> seriesOptions = new ArrayList<>();
+
+    /**
+     * Выбранный опцион
+     */
+    private String optionSelected;
+
 
     /**
      * Флаг включения ввода кода базового актива
@@ -66,6 +78,11 @@ public class ControlPanelView {
      * Флаг включения ввода кода базового актива
      */
     private boolean expirationDateDisable = true;
+
+    /**
+     * Флаг включения ввода кода выбора опциона
+     */
+    private boolean seriesOptionsDisable = true;
 
     @Inject
     public ControlPanelView(DataBaseServiceImpl dataBaseService, ControlConsoleService controlConsoleService) {
@@ -78,6 +95,7 @@ public class ControlPanelView {
         this.setAccount(dataBaseService.getPropertyByKey(ACCOUNT));
         this.baseActiveCodes = List.of("");
         this.expireDates.add("");
+        this.seriesOptions.add("");
         //this.expireDates.add("25.04.24");
         // this.expireDates=controlConsoleService.getOptionDates();
         // this.expireDateSelected=controlConsoleService.getSelectedOptionDate();
@@ -87,9 +105,9 @@ public class ControlPanelView {
 
     public void handleChangeTypeOption() {
         this.codeBaseDisable = false;
-        this.baseActiveCodeSelected="";
-        this.expireDateSelected="";
-        this.baseActiveCodes = List.of("","RI", "Si", "SR", "GZ", "BR");
+        this.baseActiveCodeSelected = "";
+        this.expireDateSelected = "";
+        this.baseActiveCodes = List.of("", "RI", "Si", "SR", "GZ", "BR");
     }
 
 
@@ -97,8 +115,24 @@ public class ControlPanelView {
         if (StringUtils.isNotEmpty(typeOption)) {
             this.expirationDateDisable = false;
             this.expireDates.clear();
+            this.seriesOptions.clear();
             this.expireDates.add(" ");
             this.expireDates.addAll(controlConsoleService.getOptionDates(baseActiveCodeSelected, typeOption));
+            this.seriesOptions.add(" ");
+            this.seriesOptions.addAll(controlConsoleService.getOptions(baseActiveCodeSelected, typeOption));
+            this.seriesOptionsDisable = false;
         }
+
+    }
+
+    public void handleChangeExpirationDate() {
+        if (StringUtils.isNotEmpty(expireDateSelected)) {
+            this.seriesOptionsDisable = false;
+            if (seriesOptions.isEmpty()) {
+                this.seriesOptions.add(" ");
+                this.seriesOptions.addAll(controlConsoleService.getOptions(baseActiveCodeSelected, typeOption));
+            }
+        }
+
     }
 }

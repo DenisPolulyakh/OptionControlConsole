@@ -43,6 +43,7 @@ public class ControlConsoleServiceImpl implements ControlConsoleService {
     }
 
     public List<String> getOptions(String codeBase, String typeOption) {
+        pullSelectOptions(codeBase,typeOption);
         return options;
     }
 

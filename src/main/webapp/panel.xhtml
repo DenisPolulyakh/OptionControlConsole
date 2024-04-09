@@ -17,7 +17,7 @@
                 <h:outputText value="Номер счета"/>
                 <p:inputText id="account" disabled="true" styleClass="red" value="#{controlPanelView.account}"/>
             </h:panelGrid>
-            <h:panelGrid columns="3" cellpadding="4" columnClasses="topAligned,topAligned,topAligned">
+            <h:panelGrid columns="4" cellpadding="4" columnClasses="topAligned,topAligned,topAligned,topAligned">
                 <h:panelGrid columns="1" style="margin-bottom:10px" cellpadding="5">
                     <p:outputLabel for="typeOption" value="Тип опциона"/>
                     <p:selectOneRadio id="typeOption" value="#{controlPanelView.typeOption}" layout="grid" columns="1">
@@ -38,8 +38,16 @@
                     <p:outputLabel value="Дата экспирации"/>
                     <p:selectOneMenu id="expirationDate" value="#{controlPanelView.expireDateSelected}" disabled="#{controlPanelView.expirationDateDisable}" dynamic="true" style="width:100%">
                         <f:selectItems value="#{controlPanelView.expireDates}"/>
+                        <p:ajax event="change" update="seriesOptions" listener="#{controlPanelView.handleChangeExpirationDate()}"/>
                     </p:selectOneMenu>
                 </h:panelGrid>
+                <h:panelGrid columns="1" cellpadding="4">
+                    <p:outputLabel value="Серия опционов"/>
+                    <p:selectOneMenu id="seriesOptions" value="#{controlPanelView.optionSelected}" disabled="#{controlPanelView.seriesOptionsDisable}" dynamic="true" style="width:100%">
+                        <f:selectItems value="#{controlPanelView.seriesOptions}"/>
+                    </p:selectOneMenu>
+                </h:panelGrid>
+
             </h:panelGrid>
 
         </p:panel>

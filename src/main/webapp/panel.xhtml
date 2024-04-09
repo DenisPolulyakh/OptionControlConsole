@@ -6,33 +6,45 @@
       xmlns:f="http://java.sun.com/jsf/core">
 
 <h:head>
-  <title>PrimeFaces Hello World Example</title>
-    <h:outputStylesheet name="/css/style.css" />
+    <title>Option Robot Control Panel</title>
+    <h:outputStylesheet name="/css/style.css"/>
 </h:head>
 
 <h:body>
-   <h:form id="helloworld-form">
+    <h:form id="control-panel-form">
+        <p:panel header="Панель управления роботом" >
+            <h:panelGrid columns="1" cellpadding="4">
+                <h:outputText value="Номер счета"/>
+                <p:inputText id="account" disabled="true" styleClass="red" value="#{controlPanelView.account}"/>
+            </h:panelGrid>
+            <h:panelGrid columns="3" cellpadding="4" columnClasses="topAligned,topAligned,topAligned">
+                <h:panelGrid columns="1" style="margin-bottom:10px" cellpadding="5">
+                    <p:outputLabel for="typeOption" value="Тип опциона"/>
+                    <p:selectOneRadio id="typeOption" value="#{controlPanelView.typeOption}" layout="grid" columns="1">
+                        <f:selectItem itemLabel="CALL" itemValue="CALL"/>
+                        <f:selectItem itemLabel="PUT" itemValue="PUT"/>
+                        <p:ajax event="change" update="codeBase" listener="#{controlPanelView.handleChangeTypeOption}"/>
+                    </p:selectOneRadio>
+                </h:panelGrid>
+                <h:panelGrid columns="1" cellpadding="4">
+                    <p:outputLabel value="Код базового актива"/>
+                    <p:selectOneMenu id="codeBase" value="#{controlPanelView.baseActiveCodeSelected}" disabled="#{controlPanelView.codeBaseDisable}" dynamic="true" style="width:100%">
+                        <f:selectItems value="#{controlPanelView.baseActiveCodes}"/>
+                        <p:ajax event="change" update="expirationDate" listener="#{controlPanelView.handleChangeCodeBase()}"/>
+                    </p:selectOneMenu>
+                </h:panelGrid>
 
-    <p:panel header="Панель управления">
-      <h:panelGrid columns="1" cellpadding="4">
-        <h:outputText  value="Номер счета"/>
-        <p:inputText id="account" disabled="true" styleClass="red" value="#{controlPanelView.account}" />
-      </h:panelGrid>
-        <h:panelGrid columns="1" cellpadding="4">
-            <h:panelGrid columns="1" style="margin-bottom:10px" cellpadding="5">
-                <p:outputLabel for="typeOption" value="Тип опциона" />
-                <p:selectOneRadio id="typeOption" value="#{radioView.typeOption}"  layout="grid" columns="1">
-                    <f:selectItem itemLabel="CALL" itemValue="CALL" />
-                    <f:selectItem itemLabel="PUT" itemValue="PUT" />
-                </p:selectOneRadio>
+                <h:panelGrid columns="1" cellpadding="4">
+                    <p:outputLabel value="Дата экспирации"/>
+                    <p:selectOneMenu id="expirationDate" value="#{controlPanelView.expireDateSelected}" disabled="#{controlPanelView.expirationDateDisable}" dynamic="true" style="width:100%">
+                        <f:selectItems value="#{controlPanelView.expireDates}"/>
+                    </p:selectOneMenu>
+                </h:panelGrid>
             </h:panelGrid>
 
-        </h:panelGrid>
-
-    </p:panel>
+        </p:panel>
 
 
-
-  </h:form>
+    </h:form>
 </h:body>
 </html>

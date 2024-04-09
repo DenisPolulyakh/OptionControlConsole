@@ -1,3 +1,15 @@
 .red{
    color: red;
 }
+
+.topAligned {
+   vertical-align: baseline;
+}
+
+.centerClass{
+
+}
+
+.ui-panel-titlebar{
+   text-align: center;
+}

@@ -9,6 +9,7 @@ import jakarta.inject.Inject;
 import jakarta.inject.Named;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
@@ -20,6 +21,7 @@ import static com.traderobot.www.model.Property.ACCOUNT;
 @Getter
 @Setter
 @ViewScoped
+@Slf4j
 public class ControlPanelView {
 
 
@@ -84,6 +86,24 @@ public class ControlPanelView {
      */
     private boolean seriesOptionsDisable = true;
 
+    private String offerQuik;
+
+    private String theorQuik;
+
+    private String offerQuik;
+
+
+
+    /**
+     * Шаг от теоретической цены
+     */
+    private int stepTeor;
+
+    /**
+     * Флаг включения изменения шага
+     */
+    private boolean stepTeorDisable = true;
+
     @Inject
     public ControlPanelView(DataBaseServiceImpl dataBaseService, ControlConsoleService controlConsoleService) {
         this.dataBaseService = dataBaseService;
@@ -105,9 +125,17 @@ public class ControlPanelView {
 
     public void handleChangeTypeOption() {
         this.codeBaseDisable = false;
-        this.baseActiveCodeSelected = "";
-        this.expireDateSelected = "";
-        this.baseActiveCodes = List.of("", "RI", "Si", "SR", "GZ", "BR");
+        if(StringUtils.isNotEmpty(this.baseActiveCodeSelected)){
+            //При изменении типа опциона меняются только серии опционов
+            this.seriesOptions.clear();
+            this.seriesOptions.add(" ");
+            this.seriesOptions.addAll(controlConsoleService.getOptions(baseActiveCodeSelected, typeOption));
+        }else {
+            this.baseActiveCodeSelected = "";
+            this.expireDateSelected = "";
+            this.baseActiveCodes = List.of("", "RI", "Si", "SR", "GZ", "BR");
+        }
+
     }
 
 
@@ -134,5 +162,12 @@ public class ControlPanelView {
             }
         }
 
+    }
+
+    public void handleChangeSeriesOptions() {
+        log.info("Выбранный опцион {}", this.optionSelected);
+        if (StringUtils.isNotEmpty(this.optionSelected)) {
+            this.stepTeorDisable = false;
+        }
     }
 }

@@ -1,8 +1,11 @@
 package com.traderobot.www.view;
 
 
+import com.traderobot.www.dto.PriceResponse;
+import com.traderobot.www.dto.QuikRequest;
 import com.traderobot.www.impl.DataBaseServiceImpl;
 import com.traderobot.www.intf.ControlConsoleService;
+import com.traderobot.www.intf.PriceService;
 import jakarta.annotation.PostConstruct;
 import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Inject;
@@ -14,7 +17,9 @@ import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
+import static com.traderobot.www.dto.Commands.GET_PRICES;
 import static com.traderobot.www.model.Property.ACCOUNT;
 
 @Named
@@ -28,6 +33,8 @@ public class ControlPanelView {
     private final DataBaseServiceImpl dataBaseService;
 
     private final ControlConsoleService controlConsoleService;
+
+    private final PriceService priceService;
     /**
      * Номер торгового счета
      */
@@ -86,12 +93,21 @@ public class ControlPanelView {
      */
     private boolean seriesOptionsDisable = true;
 
-    private String offerQuik;
+    private String offer;
 
-    private String theorQuik;
+    private String theor;
 
-    private String offerQuik;
+    private String bid;
 
+    /**
+     * Стоимость шага цены
+     */
+    private String stepPrice;
+
+    /**
+     * Шаг цены
+     */
+    private String step;
 
 
     /**
@@ -105,9 +121,10 @@ public class ControlPanelView {
     private boolean stepTeorDisable = true;
 
     @Inject
-    public ControlPanelView(DataBaseServiceImpl dataBaseService, ControlConsoleService controlConsoleService) {
+    public ControlPanelView(DataBaseServiceImpl dataBaseService, ControlConsoleService controlConsoleService, PriceService priceService) {
         this.dataBaseService = dataBaseService;
         this.controlConsoleService = controlConsoleService;
+        this.priceService = priceService;
     }
 
     @PostConstruct
@@ -125,12 +142,12 @@ public class ControlPanelView {
 
     public void handleChangeTypeOption() {
         this.codeBaseDisable = false;
-        if(StringUtils.isNotEmpty(this.baseActiveCodeSelected)){
+        if (StringUtils.isNotEmpty(this.baseActiveCodeSelected)) {
             //При изменении типа опциона меняются только серии опционов
             this.seriesOptions.clear();
             this.seriesOptions.add(" ");
             this.seriesOptions.addAll(controlConsoleService.getOptions(baseActiveCodeSelected, typeOption));
-        }else {
+        } else {
             this.baseActiveCodeSelected = "";
             this.expireDateSelected = "";
             this.baseActiveCodes = List.of("", "RI", "Si", "SR", "GZ", "BR");
@@ -169,5 +186,32 @@ public class ControlPanelView {
         if (StringUtils.isNotEmpty(this.optionSelected)) {
             this.stepTeorDisable = false;
         }
+    }
+
+    public void checkPrice() {
+        if (StringUtils.isNotBlank(optionSelected)) {
+
+            QuikRequest quikRequest = QuikRequest.newBuilder().addCommand(GET_PRICES.name()).addOptionCode(optionSelected).build();
+            PriceResponse priceResponse = priceService.getPrices(quikRequest);
+            this.theor = getPrice(priceResponse.getTheor());
+            this.offer = getPrice(priceResponse.getOffer());
+            this.bid = getPrice(priceResponse.getBid());
+            this.stepPrice = getPrice(priceResponse.getPriceStep());
+            this.step = getPrice(priceResponse.getPriceStep());
+
+        } else {
+            Random rand = new Random();
+            this.theor = "";
+            this.offer = "";
+            this.bid = "";
+            this.stepPrice = "";
+            this.step = "";
+        }
+    }
+
+
+    private String getPrice(String price) {
+        return StringUtils.isNotBlank(price) ? price : "";
+
     }
 }

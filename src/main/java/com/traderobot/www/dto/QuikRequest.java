@@ -59,6 +59,11 @@ public class QuikRequest {
      */
     private String command;
 
+    /**
+     * Идентификатор запроса, нужно для открытых позиций
+     */
+    private String uuid;
+
     public static QuikRequestBuilder newBuilder() {
         return new QuikRequest().new QuikRequestBuilder();
     }
@@ -117,6 +122,11 @@ public class QuikRequest {
 
         public QuikRequestBuilder addPriceStop(String priceStop) {
             QuikRequest.this.priceStop = priceStop;
+            return this;
+        }
+
+        public QuikRequestBuilder addUuid(String uuid) {
+            QuikRequest.this.uuid = uuid;
             return this;
         }
 

@@ -6,6 +6,10 @@
    vertical-align: baseline;
 }
 
+.bottomAligned {
+   vertical-align: bottom;
+}
+
 .centerClass{
 
 }

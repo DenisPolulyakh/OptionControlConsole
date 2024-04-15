@@ -7,5 +7,7 @@ public interface ControlConsoleService {
 
     List<String> getOptions(String codeBase, String typeOption);
 
+    List<String> getOptions(String codeBase, String typeOption, String expirationDate);
+
     String getSelectedOptionDate(String codeBase, String typeOption);
 }

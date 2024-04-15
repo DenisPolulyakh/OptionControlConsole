@@ -38,12 +38,18 @@ public class ControlConsoleServiceImpl implements ControlConsoleService {
     }
 
     public List<String> getOptionDates(String codeBase, String typeOption) {
-        pullSelectOptions(codeBase,typeOption);
+        pullSelectOptions(codeBase, typeOption, null);
         return optionDates;
     }
 
     public List<String> getOptions(String codeBase, String typeOption) {
-        pullSelectOptions(codeBase,typeOption);
+        pullSelectOptions(codeBase, typeOption, null);
+        return options;
+    }
+
+    @Override
+    public List<String> getOptions(String codeBase, String typeOption, String expirationDate) {
+        pullSelectOptions(codeBase, typeOption, expirationDate);
         return options;
     }
 
@@ -51,7 +57,7 @@ public class ControlConsoleServiceImpl implements ControlConsoleService {
         return selectedOptionDate;
     }
 
-    private void pullSelectOptions(String codeBase, String typeOption) {
+    private void pullSelectOptions(String codeBase, String typeOption, String expirationDate) {
         optionDates.clear();
         options.clear();
         optionSecurities = optionCache.getOptions();
@@ -64,9 +70,14 @@ public class ControlConsoleServiceImpl implements ControlConsoleService {
         }
         if (sortedOptions.size() > 0) {
             LocalDate firstLocalDate = sortedOptions.keySet().stream().findFirst().get();
-            selectedOptionDate = firstLocalDate.format(formatter);
-            optionDates.addAll(dates);
-            options.addAll(sortedOptions.get(firstLocalDate));
+            if (expirationDate != null) {
+                LocalDate selectedExpirationDate = LocalDate.parse(expirationDate, formatter);
+                options.addAll(sortedOptions.get(selectedExpirationDate));
+            } else {
+                selectedOptionDate = firstLocalDate.format(formatter);
+                optionDates.addAll(dates);
+                options.addAll(sortedOptions.get(firstLocalDate));
+            }
         }
     }
 }

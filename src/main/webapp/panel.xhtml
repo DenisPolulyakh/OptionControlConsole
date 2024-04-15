@@ -12,12 +12,12 @@
 
 <h:body>
     <h:form id="control-panel-form">
-        <p:panel header="Панель управления роботом" >
+        <p:panel header="Панель управления роботом">
             <h:panelGrid columns="1" cellpadding="4">
                 <h:outputText value="Номер счета"/>
                 <p:inputText id="account" disabled="true" styleClass="red" value="#{controlPanelView.account}"/>
             </h:panelGrid>
-            <h:panelGrid columns="8" cellpadding="5" columnClasses="topAligned,topAligned,topAligned,topAligned,topAligned,topAligned,topAligned,topAligned">
+            <h:panelGrid columns="9" cellpadding="4" columnClasses="topAligned,topAligned,topAligned,topAligned,topAligned,topAligned,topAligned,topAligned">
                 <h:panelGrid columns="1" style="margin-bottom:10px" cellpadding="5">
                     <p:outputLabel for="typeOption" value="Тип опциона"/>
                     <p:selectOneRadio id="typeOption" value="#{controlPanelView.typeOption}" layout="grid" columns="1">
@@ -26,45 +26,53 @@
                         <p:ajax event="change" update="codeBase" listener="#{controlPanelView.handleChangeTypeOption}"/>
                     </p:selectOneRadio>
                 </h:panelGrid>
-                <h:panelGrid columns="1" cellpadding="4">
+                <h:panelGrid columns="1" cellpadding="3">
                     <p:outputLabel value="Код базового актива"/>
                     <p:selectOneMenu id="codeBase" value="#{controlPanelView.baseActiveCodeSelected}" disabled="#{controlPanelView.codeBaseDisable}" dynamic="true" style="width:100%">
                         <f:selectItems value="#{controlPanelView.baseActiveCodes}"/>
-                        <p:ajax event="change" update="expirationDate" listener="#{controlPanelView.handleChangeCodeBase()}"/>
+                        <p:ajax event="change" update="expirationDate, seriesOptions" listener="#{controlPanelView.handleChangeCodeBase()}"/>
                     </p:selectOneMenu>
                 </h:panelGrid>
 
-                <h:panelGrid columns="1" cellpadding="4">
+                <h:panelGrid columns="1" cellpadding="3">
                     <p:outputLabel value="Дата экспирации"/>
                     <p:selectOneMenu id="expirationDate" value="#{controlPanelView.expireDateSelected}" disabled="#{controlPanelView.expirationDateDisable}" dynamic="true" style="width:100%">
                         <f:selectItems value="#{controlPanelView.expireDates}"/>
                         <p:ajax event="change" update="seriesOptions" listener="#{controlPanelView.handleChangeExpirationDate()}"/>
                     </p:selectOneMenu>
                 </h:panelGrid>
-                <h:panelGrid columns="1" cellpadding="5">
+                <h:panelGrid columns="1" cellpadding="3">
                     <p:outputLabel value="Серия опционов"/>
                     <p:selectOneMenu id="seriesOptions" value="#{controlPanelView.optionSelected}" disabled="#{controlPanelView.seriesOptionsDisable}" dynamic="true" style="width:100%">
                         <f:selectItems value="#{controlPanelView.seriesOptions}"/>
-                        <p:ajax event="change"  update="stepTeor" listener="#{controlPanelView.handleChangeSeriesOptions}"/>
+                        <p:ajax event="change" update="stepTeor" listener="#{controlPanelView.handleChangeSeriesOptions}"/>
                     </p:selectOneMenu>
                 </h:panelGrid>
-                <h:panelGrid columns="1" cellpadding="4">
-                    <h:outputText value="Заявка на продажу(OFFER)"/>
+                <h:panelGrid columns="1" cellpadding="3">
+                    <h:outputText value="Продажа"/>
                     <h:outputText id="offer" style="color: red" value="#{controlPanelView.offer}"/>
                 </h:panelGrid>
-                <h:panelGrid columns="1" cellpadding="4">
-                    <h:outputText value="Теоретическая цена(THEOR)"/>
-                    <h:outputText  id="theor" style="color: blue"  value="#{controlPanelView.theor}"/>
+                <h:panelGrid columns="1" cellpadding="3">
+                    <h:outputText value="Теор"/>
+                    <h:outputText id="theor" style="color: blue" value="#{controlPanelView.theor}"/>
 
                 </h:panelGrid>
-                <h:panelGrid columns="1" cellpadding="4" >
-                    <h:outputText value="Заявка на покупку(BID)"/>
-                    <h:outputText id="bid"  style="color: green" value="#{controlPanelView.bid}"/>
+                <h:panelGrid columns="1" cellpadding="3">
+                    <h:outputText value="Покупка"/>
+                    <h:outputText id="bid" style="color: green" value="#{controlPanelView.bid}"/>
                 </h:panelGrid>
-                <h:panelGrid columns="1" cellpadding="4">
-                    <p:outputLabel value="Шаг от теоретической цены"/>
-                    <p:spinner id="stepTeor" disabled="#{controlPanelView.stepTeorDisable}" value="#{controlPanelView.stepTeor}" />
+                <h:panelGrid columns="2" cellpadding="3">
+                    <h:panelGrid columns="1" cellpadding="3">
+                        <p:outputLabel value="Отступ от теор."/>
+                        <p:spinner id="stepTeor" disabled="#{controlPanelView.stepTeorDisable}" value="#{controlPanelView.stepTeor}"/>
+                    </h:panelGrid>
+                    <h:panelGrid columns="2" cellpadding="3">
+                        <p:commandButton value="Покупка" id="buy" action="#{controlPanelView.buy()}" style="margin-right:20px;color: limegreen"/>
+                        <p:commandButton value="Продажа" id="sell" action="#{controlPanelView.sell()}" style="margin-right:20px;color: red"/>
+                    </h:panelGrid>
+
                 </h:panelGrid>
+
                 <p:poll interval="5" listener="#{controlPanelView.checkPrice}" update="theor, offer, bid"/>
             </h:panelGrid>
 

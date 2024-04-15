@@ -162,21 +162,22 @@ public class ControlPanelView {
             this.expireDates.clear();
             this.seriesOptions.clear();
             this.expireDates.add(" ");
+            this.expireDateSelected=" ";
             this.expireDates.addAll(controlConsoleService.getOptionDates(baseActiveCodeSelected, typeOption));
             this.seriesOptions.add(" ");
+            this.optionSelected=" ";
             this.seriesOptions.addAll(controlConsoleService.getOptions(baseActiveCodeSelected, typeOption));
-            this.seriesOptionsDisable = false;
+
         }
 
     }
 
     public void handleChangeExpirationDate() {
-        if (StringUtils.isNotEmpty(expireDateSelected)) {
+        if (StringUtils.isNotBlank(expireDateSelected)) {
             this.seriesOptionsDisable = false;
-            if (seriesOptions.isEmpty()) {
-                this.seriesOptions.add(" ");
-                this.seriesOptions.addAll(controlConsoleService.getOptions(baseActiveCodeSelected, typeOption));
-            }
+            this.seriesOptions.clear();
+            this.seriesOptions.add(" ");
+            this.seriesOptions.addAll(controlConsoleService.getOptions(baseActiveCodeSelected, typeOption, expireDateSelected));
         }
 
     }
@@ -209,6 +210,14 @@ public class ControlPanelView {
         }
     }
 
+
+    public void buy(){
+        log.info("Покупка");
+    }
+
+    public void sell(){
+        log.info("Продажа");
+    }
 
     private String getPrice(String price) {
         return StringUtils.isNotBlank(price) ? price : "";

@@ -107,18 +107,38 @@ public class ControlPanelView {
     /**
      * Шаг цены
      */
-    private String step;
+    private String step="0";
 
 
     /**
-     * Шаг от теоретической цены
+     * Шаг от теоретической цены минимальный
      */
-    private int stepTeor;
+    private double priceMin;
+
+    /**
+     * Шаг от теоретической цены максимальный
+     */
+    private double priceMax;
 
     /**
      * Флаг включения изменения шага
      */
     private boolean stepTeorDisable = true;
+
+    /**
+     * Цена не выше/ниже которой покупать/продавать
+     */
+    private String price;
+
+    /**
+     * Количество контрактов
+     */
+    private String contract;
+
+    /**
+     * Часть
+     */
+    private String part;
 
     @Inject
     public ControlPanelView(DataBaseServiceImpl dataBaseService, ControlConsoleService controlConsoleService, PriceService priceService) {
@@ -186,6 +206,7 @@ public class ControlPanelView {
         log.info("Выбранный опцион {}", this.optionSelected);
         if (StringUtils.isNotEmpty(this.optionSelected)) {
             this.stepTeorDisable = false;
+            checkPrice();
         }
     }
 
@@ -194,12 +215,11 @@ public class ControlPanelView {
 
             QuikRequest quikRequest = QuikRequest.newBuilder().addCommand(GET_PRICES.name()).addOptionCode(optionSelected).build();
             PriceResponse priceResponse = priceService.getPrices(quikRequest);
-            this.theor = getPrice(priceResponse.getTheor());
-            this.offer = getPrice(priceResponse.getOffer());
-            this.bid = getPrice(priceResponse.getBid());
-            this.stepPrice = getPrice(priceResponse.getPriceStep());
-            this.step = getPrice(priceResponse.getPriceStep());
-
+            this.theor = getValue(priceResponse.getTheor());
+            this.offer = getValue(priceResponse.getOffer());
+            this.bid = getValue(priceResponse.getBid());
+            this.stepPrice = getValue(priceResponse.getPriceStep());
+            this.step = getValue(priceResponse.getStep());
         } else {
             Random rand = new Random();
             this.theor = "";
@@ -219,7 +239,7 @@ public class ControlPanelView {
         log.info("Продажа");
     }
 
-    private String getPrice(String price) {
+    private String getValue(String price) {
         return StringUtils.isNotBlank(price) ? price : "";
 
     }

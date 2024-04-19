@@ -28,7 +28,8 @@
                 </h:panelGrid>
                 <h:panelGrid columns="1" cellpadding="3">
                     <p:outputLabel value="Код базового актива"/>
-                    <p:selectOneMenu id="codeBase" autoWidth="false" size="3" value="#{controlPanelView.baseActiveCodeSelected}" disabled="#{controlPanelView.codeBaseDisable}" dynamic="true" style="width:100%">
+                    <p:selectOneMenu id="codeBase" autoWidth="false" size="3" value="#{controlPanelView.baseActiveCodeSelected}" disabled="#{controlPanelView.codeBaseDisable}" dynamic="true"
+                                     style="width:100%">
                         <f:selectItems value="#{controlPanelView.baseActiveCodes}"/>
                         <p:ajax event="change" update="expirationDate, seriesOptions" listener="#{controlPanelView.handleChangeCodeBase()}"/>
                     </p:selectOneMenu>
@@ -63,32 +64,35 @@
                 </h:panelGrid>
                 <h:panelGrid columns="1" cellpadding="3">
                     <p:outputLabel value="Отступ min"/>
-                    <p:spinner id="priceMin" size="2" min="0" disabled="#{controlPanelView.stepTeorDisable}" value="#{controlPanelView.priceMin}" stepFactor="#{controlPanelView.step}"/>
+                    <p:spinner id="priceMin" size="2" min="0" disabled="#{controlPanelView.priceSettings}" value="#{controlPanelView.priceMin}" stepFactor="#{controlPanelView.step}"/>
                 </h:panelGrid>
 
                 <h:panelGrid columns="1" cellpadding="3">
                     <p:outputLabel value="Отступ max"/>
-                    <p:spinner id="priceMax" size="2" min="0" disabled="#{controlPanelView.stepTeorDisable}" value="#{controlPanelView.priceMax}" stepFactor="#{controlPanelView.step}"/>
+                    <p:spinner id="priceMax" size="2" min="0" disabled="#{controlPanelView.priceSettings}" value="#{controlPanelView.priceMax}" stepFactor="#{controlPanelView.step}"/>
                 </h:panelGrid>
                 <p:poll interval="5" listener="#{controlPanelView.checkPrice}" update="theor, offer, bid"/>
             </h:panelGrid>
             <h:panelGrid columns="4" cellpadding="1" columnClasses=",,,bottomAligned">
-
                 <h:panelGrid columns="1" cellpadding="1">
                     <h:outputText value="Цена"/>
-                    <p:inputText id="price"  size="3" value="#{controlPanelView.price}"/>
+                    <p:inputText id="price" size="3" value="#{controlPanelView.price}" disabled="#{controlPanelView.priceSettings}"/>
                 </h:panelGrid>
                 <h:panelGrid columns="1" cellpadding="1">
                     <h:outputText value="Количество"/>
-                    <p:inputText id="contract"  size="3" value="#{controlPanelView.contract}"/>
+                    <p:inputText id="contract" size="3" value="#{controlPanelView.contract}" disabled="#{controlPanelView.priceSettings}">
+                        <p:ajax event="change" update="buy,sell" listener="#{controlPanelView.handleChangeSeriesOptions}"/>
+                    </p:inputText>
                 </h:panelGrid>
                 <h:panelGrid columns="1" cellpadding="1">
                     <h:outputText value="Дробить"/>
-                    <p:inputText id="part" size="3" value="#{controlPanelView.part}"/>
+                    <p:inputText id="part" size="3" value="#{controlPanelView.part}" disabled="#{controlPanelView.priceSettings}"/>
                 </h:panelGrid>
-                <h:panelGrid columns="2" cellpadding="3" >
-                    <p:commandButton value="Покупка" id="buy" action="#{controlPanelView.buy()}" style="background-color: limegreen;margin-right:20px;color: whitesmoke"/>
-                    <p:commandButton value="Продажа" id="sell" action="#{controlPanelView.sell()}" style="background-color: red;margin-right:20px;color: whitesmoke"/>
+                <h:panelGrid columns="2" cellpadding="3">
+                    <p:commandButton value="Покупка" id="buy" action="#{controlPanelView.buy()}" disabled="#{controlPanelView.buttonDisable}"
+                                     style="background-color: limegreen;margin-right:20px;color: whitesmoke"/>
+                    <p:commandButton value="Продажа" id="sell" action="#{controlPanelView.sell()}" disabled="#{controlPanelView.buttonDisable}"
+                                     style="background-color: red;margin-right:20px;color: whitesmoke"/>
                 </h:panelGrid>
             </h:panelGrid>
         </p:panel>

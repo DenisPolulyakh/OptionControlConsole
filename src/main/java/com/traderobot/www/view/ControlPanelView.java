@@ -107,7 +107,7 @@ public class ControlPanelView {
     /**
      * Шаг цены
      */
-    private String step="0";
+    private String step = "0";
 
 
     /**
@@ -123,7 +123,7 @@ public class ControlPanelView {
     /**
      * Флаг включения изменения шага
      */
-    private boolean stepTeorDisable = true;
+    private boolean priceSettings = true;
 
     /**
      * Цена не выше/ниже которой покупать/продавать
@@ -139,6 +139,11 @@ public class ControlPanelView {
      * Часть
      */
     private String part;
+
+    /**
+     * Кнопки покупки и продажи выключены
+     */
+    private boolean buttonDisable = true;
 
     @Inject
     public ControlPanelView(DataBaseServiceImpl dataBaseService, ControlConsoleService controlConsoleService, PriceService priceService) {
@@ -182,10 +187,10 @@ public class ControlPanelView {
             this.expireDates.clear();
             this.seriesOptions.clear();
             this.expireDates.add(" ");
-            this.expireDateSelected=" ";
+            this.expireDateSelected = " ";
             this.expireDates.addAll(controlConsoleService.getOptionDates(baseActiveCodeSelected, typeOption));
             this.seriesOptions.add(" ");
-            this.optionSelected=" ";
+            this.optionSelected = " ";
             this.seriesOptions.addAll(controlConsoleService.getOptions(baseActiveCodeSelected, typeOption));
 
         }
@@ -205,8 +210,14 @@ public class ControlPanelView {
     public void handleChangeSeriesOptions() {
         log.info("Выбранный опцион {}", this.optionSelected);
         if (StringUtils.isNotEmpty(this.optionSelected)) {
-            this.stepTeorDisable = false;
+            this.priceSettings = false;
             checkPrice();
+        }
+    }
+
+    public void handleChangeContract() {
+        if (StringUtils.isNotBlank(this.contract) && !this.contract.equals("0")) {
+            this.buttonDisable = false;
         }
     }
 
@@ -231,11 +242,11 @@ public class ControlPanelView {
     }
 
 
-    public void buy(){
+    public void buy() {
         log.info("Покупка");
     }
 
-    public void sell(){
+    public void sell() {
         log.info("Продажа");
     }
 

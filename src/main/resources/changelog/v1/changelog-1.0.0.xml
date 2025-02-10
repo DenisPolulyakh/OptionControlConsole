@@ -10,7 +10,7 @@
     </preConditions> 
     <changeSet id="2024-02-02-01" author="polulyakh">
         <sql stripComments="true">
-            CREATE SCHEMA option;
+            CREATE SCHEMA if not exists option;
         </sql>
     </changeSet>
 </databaseChangeLog>

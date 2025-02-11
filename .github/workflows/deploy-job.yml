@@ -8,9 +8,10 @@ jobs:
   prepare-environment:
     runs-on: self-hosted
     steps:
-      - name: Stop and remove containers, networks
+      - name: Stop container
         run: docker stop option
-             docker rm option
+      - name: remove container
+        run:  docker rm option
       - name: Remove unused data
         run: docker system prune -a
   deploy:

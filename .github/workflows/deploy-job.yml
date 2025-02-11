@@ -10,8 +10,8 @@ jobs:
     steps:
       - name: Stop container
         run: docker stop option || true
-      - name: remove container || true
-        run:  docker rm option
+      - name: remove container 
+        run:  docker rm option || true
       - name: Remove unused data
         run: docker system prune -a
   deploy:

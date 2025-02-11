@@ -14,11 +14,16 @@ jobs:
         run:  docker rm option || true
       - name: Remove unused data
         run: docker system prune -a
-  deploy:
-    runs-on: self-hosted
-    needs: prepare-environment
+  build:
+    runs-on: ubuntu-latest
     steps:
-      - name: checkout repo
+      - name: Checkout code
         uses: actions/checkout@v3
-      - name: docker compose
-        run: docker compose up -d
+      - name: Set up Java
+        uses: actions/setup-java@v3
+        with:
+          java-version: '21'
+          distribution: 'oracle'
+          cache: maven
+      - name: Build and Test
+        run:  mvn clean install -DskipTests=true

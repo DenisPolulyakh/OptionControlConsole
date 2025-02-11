@@ -9,8 +9,8 @@ jobs:
     runs-on: self-hosted
     steps:
       - name: Stop container
-        run: docker stop option
-      - name: remove container
+        run: docker stop option || true
+      - name: remove container || true
         run:  docker rm option
       - name: Remove unused data
         run: docker system prune -a

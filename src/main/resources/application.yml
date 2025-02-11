@@ -2,7 +2,7 @@ spring:
   application:
     name: OptionControlConsole
   datasource:
-    url: jdbc:postgresql://localhost:5432/psql_db?currentSchema=option
+    url: jdbc:postgresql://psql_container:5432/psql_db?currentSchema=option
     username: puser
     password: money7
     driver-class-name: org.postgresql.Driver

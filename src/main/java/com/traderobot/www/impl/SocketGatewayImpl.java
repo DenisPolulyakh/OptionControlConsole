@@ -43,6 +43,7 @@ public class SocketGatewayImpl implements SocketGateway {
 
     private QuikResponse sendToSocket(int attemptCount, String message) throws SocketException {
         String serverResponse = "";
+        attemptCount=0;
         if (attemptCount <= 0) {
             return QuikResponse.fail("Ошибка отправки серверу, возможно он выключен");
         }

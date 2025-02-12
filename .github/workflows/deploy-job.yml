@@ -16,15 +16,18 @@ jobs:
           java-version: '21'
           distribution: 'temurin'
           cache: maven
-      - name: Build
-        run: mvn clean install -DskipTests
 
-      - name: Upload target folder
-        uses: actions/upload-artifact@v4
+      - name: Build Maven project
+        run: |
+          mvn -B package --file pom.xml -Dmaven.test.skip
+          mkdir staging && cp target/*.jar staging
+
+      - name: Set up a cache for Maven
+        uses: actions/cache@v2
         with:
-          name: target
-          path: |
-            ${{ github.workspace }}/target
+          path: ~/.m2
+          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+          restore-keys: ${{ runner.os }}-m2
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2

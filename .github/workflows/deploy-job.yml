@@ -19,6 +19,13 @@ jobs:
       - name: Build
         run: mvn clean install -DskipTests
 
+      - name: Upload target folder
+        uses: actions/upload-artifact@v2
+        with:
+          name: target
+          path: |
+            ${{ github.workspace }}/target
+
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
 

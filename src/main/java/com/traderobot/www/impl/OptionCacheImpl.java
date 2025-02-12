@@ -32,7 +32,7 @@ public class OptionCacheImpl implements OptionCache {
     public OptionCacheImpl(SocketClientImpl socketClient) {
         this.socketClient = socketClient;
         //Первичная инициализация
-        options.addAll(requestToQuik());
+        //options.addAll(requestToQuik());
     }
 
     @Override

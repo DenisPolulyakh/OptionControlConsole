@@ -30,7 +30,7 @@ jobs:
         run:  mvn clean package -DskipTests=true
       - name: Build Docker Image
         run:
-            docker build -t userdocker13/optionconsole:${{ github.sha }} --platform linux/arm64 .
+            docker build -t userdocker13/optionconsole:${{ github.sha }} --platform arm64v8 .
 
       - name: Log in to Docker Hub
         uses: docker/login-action@v1

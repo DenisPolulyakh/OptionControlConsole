@@ -19,15 +19,13 @@ jobs:
 
       - name: Build Maven project
         run: |
-          mvn -B package --file pom.xml -Dmaven.test.skip
-          mkdir staging && cp target/*.jar staging
+          mvn clean install --file pom.xml -Dmaven.test.skip         
 
-      - name: Set up a cache for Maven
-        uses: actions/cache@v2
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
         with:
-          path: ~/.m2
-          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
-          restore-keys: ${{ runner.os }}-m2
+            name: app.jar
+            path: target/*.jar
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2

@@ -1,3 +1,16 @@
+### Build stage
+FROM eclipse-temurin:21-jammy AS builder
+
+# Set the working directory inside the container
+WORKDIR /tmp
+
+# Copy the source code into the container
+COPY target/*.jar app.jar
+
+# Extract the layers
+RUN java -Djarmode=layertools -jar app.jar extract
+
+### Run stage
 FROM eclipse-temurin:21-jammy
 
 # Устанавливаем рабочий каталог

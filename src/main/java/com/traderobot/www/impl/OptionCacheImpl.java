@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 import java.lang.reflect.Type;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -36,12 +37,14 @@ public class OptionCacheImpl implements OptionCache {
 
     @Override
     public List<OptionSecurity> getOptions() {
-        if (options == null || options.isEmpty()) {
+        log.info("Пока не опрашиваем QUIK");
+        return Collections.emptyList();
+        /*if (options == null || options.isEmpty()) {
             log.info("Кеш пуст, делаем запрос в QUIK");
             return requestToQuik();
         }
         log.info("Данные из кеша");
-        return options;
+        return options;*/
     }
 
     private List<OptionSecurity> requestToQuik() {

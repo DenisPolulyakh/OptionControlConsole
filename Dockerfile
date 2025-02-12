@@ -1,6 +1,16 @@
-FROM maven:3.9.9-eclipse-temurin-21
+FROM eclipse-temurin:21-jammy
+
+# Устанавливаем рабочий каталог
 WORKDIR /app
-COPY . .
-EXPOSE 8080
-RUN mvn install --no-transfer-progress -DskipTests=true
-ENTRYPOINT ["mvn", "spring-boot:run"]
+
+# Копируем проект в контейнер
+COPY . /app/
+
+# Устанавливаем права на исполнение для mvnw
+RUN chmod +x /app/mvnw
+
+# Открываем порт
+EXPOSE 8585
+
+# Запускаем приложение
+ENTRYPOINT [ "/app/mvnw", "spring-boot:run" ]

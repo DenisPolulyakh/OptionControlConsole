@@ -40,6 +40,7 @@ jobs:
 
       - name: Push to Docker Hub
         run: |
+             ./mvnw spring-boot:build-image
              docker tag userdocker13/optionconsole:${{ github.sha }} userdocker13/optionconsole:latest
              docker push userdocker13/optionconsole:latest
         

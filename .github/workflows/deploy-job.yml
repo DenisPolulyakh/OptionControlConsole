@@ -27,7 +27,7 @@ jobs:
           distribution: 'oracle'
           cache: maven
       - name: Build and Test
-        run:  mvn clean install -DskipTests=true
+        run:  mvn clean package -DskipTests=true
       - name: Build Docker Image
         run:
             docker build -t userdocker13/optionconsole:${{ github.sha }} --platform linux/arm64/v8 .
@@ -40,7 +40,6 @@ jobs:
 
       - name: Push to Docker Hub
         run: |
-             ./mvnw spring-boot:build-image
              docker tag userdocker13/optionconsole:${{ github.sha }} userdocker13/optionconsole:latest
              docker push userdocker13/optionconsole:latest
         

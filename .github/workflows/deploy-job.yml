@@ -47,7 +47,7 @@ jobs:
           context: .
           file: Dockerfile-app
           push: true
-          tags: userdocker13/optionconsole:${{ github.sha }} userdocker13/optionconsole:latest
+          tags: userdocker13/optionconsole:latest
 
 
         

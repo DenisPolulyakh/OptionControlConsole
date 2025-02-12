@@ -1,6 +1,7 @@
 FROM        eclipse-temurin:21-jammy
 WORKDIR /app
-COPY . .
+# Копируем проект в контейнер
+COPY . /app/
 
 # Добавляем текущий каталог в PATH
 ENV PATH="${PATH}:/app"

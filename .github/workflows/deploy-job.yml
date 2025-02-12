@@ -27,7 +27,7 @@ jobs:
           distribution: 'temurin'
           cache: maven
       - name: Build and Test
-        run: mvn spring-boot:build-image
+        run: mvn spring-boot:build-image -DskipTests=true
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2

@@ -1,5 +1,5 @@
-### Build stage
-FROM eclipse-temurin:21-jammy AS builder
+# Стадия сборки
+FROM maven:3.8.6-openjdk-17 AS builder
 
 # Устанавливаем рабочий каталог
 WORKDIR /app

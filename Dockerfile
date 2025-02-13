@@ -1,5 +1,5 @@
 # Стадия сборки
-FROM bellsoft/liberica-openjdk-debian:17 AS builder
+FROM bellsoft/liberica-openjdk-debian:21 AS builder
 
 # Устанавливаем рабочий каталог
 WORKDIR /app

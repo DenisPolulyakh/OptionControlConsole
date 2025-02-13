@@ -1,5 +1,5 @@
 # Стадия сборки
-FROM bellsoft/liberica-openjdk-debian:21 AS builder
+FROM eclipse-temurin:21-jammy AS builder
 
 # Устанавливаем рабочий каталог
 WORKDIR /app

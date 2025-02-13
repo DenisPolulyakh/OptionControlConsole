@@ -1,5 +1,5 @@
 # Стадия сборки
-FROM maven:3.8.6-jdk-17 AS builder
+FROM bellsoft/liberica-openjdk-debian:17 AS builder
 
 # Устанавливаем рабочий каталог
 WORKDIR /app

@@ -10,9 +10,9 @@ ENV MAVEN_VERSION 3.9.0
 ENV MAVEN_HOME /opt/apache-maven-${MAVEN_VERSION}
 ENV PATH ${MAVEN_HOME}/bin:${PATH}
 
-RUN wget -qO- https://dlcdn.apache.org/maven/maven-3/${MAVEN_VERSION}/binaries/apache-maven-${MAVEN_VERSION}-bin.tar.gz | \
-    tar zxf - -C /opt && \
-    echo "Maven installed successfully!" || { echo "Failed to extract Maven archive"; exit 1; }
+RUN wget -qO- https://dlcdn.apache.org/maven/maven-3/${MAVEN_VERSION}/binaries/apache-maven-${MAVEN_VERSION}-bin.tar.gz > /tmp/maven.tar.gz && \
+    tar zxf /tmp/maven.tar.gz -C /opt && \
+    rm -f /tmp/maven.tar.gz
 
 # Устанавливаем рабочий каталог
 WORKDIR /app

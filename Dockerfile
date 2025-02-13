@@ -10,6 +10,8 @@ COPY target/*.jar app.jar
 # Extract the layers
 RUN java -Djarmode=layertools -jar app.jar extract
 
+RUN mvn clean package -DskipTests
+
 ### Run stage
 FROM eclipse-temurin:21-jammy
 

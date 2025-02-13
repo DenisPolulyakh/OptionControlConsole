@@ -21,12 +21,6 @@ jobs:
         run: |
           mvn clean install --file pom.xml -Dmaven.test.skip         
 
-      - name: Upload artifact
-        uses: actions/upload-artifact@v4
-        with:
-            name: app.jar
-            path: target/*.jar
-
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
 

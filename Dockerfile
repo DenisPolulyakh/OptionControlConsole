@@ -1,6 +1,20 @@
 # Стадия сборки
 FROM eclipse-temurin:21-jammy AS builder
 
+
+# Устанавливаем необходимые пакеты
+RUN apt-get update && \
+    apt-get install -y wget tar
+
+# Скачиваем и устанавливаем Maven
+ENV MAVEN_VERSION 3.9.0
+ENV MAVEN_HOME /opt/apache-maven-${MAVEN_VERSION}
+ENV PATH ${MAVEN_HOME}/bin:${PATH}
+
+RUN wget https://dlcdn.apache.org/maven/maven-3/${MAVEN_VERSION}/binaries/apache-maven-${MAVEN_VERSION}-bin.tar.gz -O /tmp/maven.tar.gz && \
+    tar xzf /tmp/maven.tar.gz -C /opt && \
+    rm /tmp/maven.tar.gz \
+
 # Устанавливаем рабочий каталог
 WORKDIR /app
 

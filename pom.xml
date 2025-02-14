@@ -139,6 +139,7 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
+                    <imageName>userdocker13/optionconsole</imageName>
                     <excludes>
                         <exclude>
                             <groupId>org.projectlombok</groupId>

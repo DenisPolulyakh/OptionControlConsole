@@ -146,7 +146,6 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <imageName>userdocker13/optionconsole</imageName>
                     <excludes>
                         <exclude>
                             <groupId>org.projectlombok</groupId>

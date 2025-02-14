@@ -10,4 +10,4 @@ COPY target/*.jar /app/app.jar
 EXPOSE 8585
 
 # Запускаем приложение
-ENTRYPOINT ["java", "-jar", "/app/app.jar"]
+ENTRYPOINT ["java","-Dserver.port=8585", "-jar", "/app/app.jar"]

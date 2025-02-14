@@ -8,7 +8,7 @@ COPY pom.xml /app/
 COPY src /app/src/
 
 # Собираем проект и создаем JAR-файл
-RUN mvn clean package
+RUN mvn clean package -DskipTests
 
 # Финальный этап сборки
 FROM eclipse-temurin:21

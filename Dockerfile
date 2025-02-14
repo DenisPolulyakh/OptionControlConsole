@@ -1,16 +1,29 @@
+# Стадия сборки
+FROM eclipse-temurin:21-jre-alpine  AS builder
+
+
+
+# Устанавливаем рабочий каталог
+WORKDIR /app
+
+# Копируем исходники в контейнер
+COPY pom.xml .
+COPY src ./src
+
+# Собираем проект с использованием Maven
+RUN mvn clean package -DskipTests
+
+# Стадия запуска
 FROM eclipse-temurin:21-jammy
 
 # Устанавливаем рабочий каталог
 WORKDIR /app
 
-# Копируем проект в контейнер
-COPY . /app/
-
-# Устанавливаем права на исполнение для mvnw
-RUN chmod +x /app/mvnw
+# Копируем собранный JAR-файл из стадии сборки
+COPY --from=builder /app/target/*.jar app.jar
 
 # Открываем порт
 EXPOSE 8585
 
 # Запускаем приложение
-ENTRYPOINT [ "/app/mvnw", "spring-boot:run" ]
+ENTRYPOINT [ "java", "-jar", "/app/app.jar" ]

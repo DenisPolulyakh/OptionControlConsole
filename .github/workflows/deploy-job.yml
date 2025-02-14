@@ -16,8 +16,16 @@ jobs:
           java-version: '21'
           distribution: 'temurin'
           cache: maven
-      - name: Build
-        run: mvn clean install -DskipTests
+
+      - name: Build Maven project
+        run: |
+          mvn clean install --file pom.xml -Dmaven.test.skip         
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+            name: app.jar
+            path: target/*.jar
 
       - name: Build Docker Image
         uses: mvn spring-boot:build-image
@@ -38,4 +46,4 @@ jobs:
           tags: userdocker13/optionconsole:latest
 
 
-        
+

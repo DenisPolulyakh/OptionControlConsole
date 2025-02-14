@@ -4,10 +4,13 @@ FROM eclipse-temurin:21-jammy
 WORKDIR /app
 
 # Копируем проект в контейнер
-COPY target/*.jar /app/app.jar
+COPY . /app/
+
+# Устанавливаем права на исполнение для mvnw
+RUN chmod +x /app/mvnw
 
 # Открываем порт
 EXPOSE 8585
 
 # Запускаем приложение
-ENTRYPOINT ["java", "-jar", "/app/app.jar"]
+ENTRYPOINT ["/app/mvnw", "spring-boot:run"]

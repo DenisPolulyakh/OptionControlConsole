@@ -11,4 +11,4 @@ COPY ${JAR_FILE} app.jar
 EXPOSE 8585
 
 # Запускаем приложение
-ENTRYPOINT [ "java", "-jar", "/app/app.jar" ]
+ENTRYPOINT [ "mvnw", "spring-boot:run"]

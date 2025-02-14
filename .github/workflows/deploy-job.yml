@@ -18,7 +18,17 @@ jobs:
           cache: maven
 
       - name: Build Maven project
-        run: mvn clean install --file pom.xml -Dmaven.test.skip
+        run: |
+          mvn clean install --file pom.xml -Dmaven.test.skip         
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: app.jar
+          path: target/*.jar
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
 
       - name: Dashboard to Docker Hub
         uses: docker/login-action@v2

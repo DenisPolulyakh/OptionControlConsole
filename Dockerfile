@@ -1,18 +1,13 @@
 FROM eclipse-temurin:21-jammy
 
-# Копируем файлы проекта в контейнер
-COPY . /app/
+# Устанавливаем рабочий каталог
+WORKDIR /app
 
-# Устанавливаем рабочую директорию
-WORKDIR /app/
-
-# Проверяем наличие файла mvnw
-RUN ls -l .
-
-# Устанавливаем права на исполнение для mvnw
-RUN chmod a+x ./mvnw
+# Копируем проект в контейнер
+COPY target/*.jar /app/app.jar
 
 # Открываем порт
-EXPOSE 8080
+EXPOSE 8585
 
-CMD ["./mvnw", "spring-boot:run"]
+# Запускаем приложение
+ENTRYPOINT ["java", "-jar", "/app/app.jar"]

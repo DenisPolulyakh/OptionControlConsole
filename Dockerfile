@@ -1,16 +1,26 @@
-FROM eclipse-temurin:21-jammy
+FROM eclipse-temurin:21 as builder
 
 # Устанавливаем рабочий каталог
 WORKDIR /app
 
 # Копируем проект в контейнер
-COPY . /app/
+COPY pom.xml /app/
+COPY src /app/src/
 
-# Устанавливаем права на исполнение для mvnw
-RUN chmod +x /app/mvnw
+# Собираем проект и создаем JAR-файл
+RUN mvn clean package
+
+# Финальный этап сборки
+FROM eclipse-temurin:21
+
+# Устанавливаем рабочий каталог
+WORKDIR /app
+
+# Копируем JAR-файл из этапа сборки
+COPY --from=builder /app/target/*.jar /app/app.jar
 
 # Открываем порт
 EXPOSE 8585
 
 # Запускаем приложение
-ENTRYPOINT [ "/app/mvnw", "spring-boot:run" ]
+ENTRYPOINT ["java", "-jar", "/app/app.jar"]

@@ -11,7 +11,7 @@ public class WelcomePageRedirect implements WebMvcConfigurer {
 
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
-        registry.addViewController("/robot")
+        registry.addViewController("")
                 .setViewName("forward:/panel.xhtml");
         registry.setOrder(Ordered.HIGHEST_PRECEDENCE);
     }

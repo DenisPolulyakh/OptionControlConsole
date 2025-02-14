@@ -2,9 +2,9 @@ spring:
   application:
     name: OptionControlConsole
   datasource:
-    url: jdbc:postgresql://db:5432/psql_db?currentSchema=option
-    username: puser
-    password: money7
+    url: jdbc:postgresql://localhost:5537/option_helper
+    username: postgres
+    password: pass7
     driver-class-name: org.postgresql.Driver
     hikari:
       idle-timeout: 300000

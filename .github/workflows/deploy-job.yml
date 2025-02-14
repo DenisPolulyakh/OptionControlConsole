@@ -18,8 +18,7 @@ jobs:
           cache: maven
 
       - name: Build Maven project
-        run: |
-          mvn clean install --file pom.xml -Dmaven.test.skip         
+        run: mvn clean install --file pom.xml -Dmaven.test.skip
 
       - name: Build Docker Image
         uses: mvn spring-boot:build-image

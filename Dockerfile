@@ -22,5 +22,8 @@ COPY --from=builder /app/target/*.jar /app/app.jar
 # Открываем порт
 EXPOSE 8585
 
+ENV SPRING_PROFILES_ACTIVE=prod
+
+
 # Запускаем приложение
-ENTRYPOINT ["java", "-jar", "/app/app.jar"]
+ENTRYPOINT ["java", "-jar",  "-Dspring.profiles.active=${SPRING_PROFILES_ACTIVE}", "/app/app.jar"]
